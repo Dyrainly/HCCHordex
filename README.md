@@ -4,16 +4,16 @@ Interpretable prediction of hepatocellular carcinoma recurrence and recurrence t
 
 ## Overview
 
-HCCHordex is a case-grounded multi-agent framework that combines modality-specific specialist agents, retrieval-augmented historical case evidence, and cross-modal reasoning to predict both recurrence status and time-to-recurrence for HCC patients.
+HCCHordex is a case-grounded multi-agent framework that combines modality-specific specialist agents, retrieval-augmented historical case evidence, and cross-modal reasoning to predict both recurrence and recurrence timing in hepatocellular carcinoma (HCC) patients.
 
-The system processes three complementary modalities — clinical-pathology records, proteomic expression profiles, and multi-phase MRI — through independent specialist agents. An attending agent synthesizes their reports into a patient-level integrated assessment. During inference, a recurrence-classification agent and a recurrence time agent retrieve analogous historical cases from a multimodal case bank and combine them with the current patient's attending report to produce evidence-grounded predictions.
+The system processes three complementary modalities — clinical-pathology records, proteomic expression profiles, and multi-phase MRI — through independent specialist agents. An attending agent then synthesizes these modality-specific traces into a unified patient-level integrated assessment, supported by evidence-grounded case retrieval and structured chain-of-thought reasoning.
 
 ## Agents
 
 | Agent | File | Role |
 |-------|------|------|
 | Clinical Agent | `agents/clinical_agent.py` | Extracts structured pathological and laboratory variables into three profiles: tumor biology, surgical curability, and hepatic background |
-| Proteomic Agent | `agents/proteomics_agent.py` | Processes tissue proteomic profiles via XGBoost + SHAP, with UniProt/KEGG annotation interpreted by LLM |
+| Proteomic Agent | `agents/proteomics_agent.py` | Processes tissue proteomic profiles via XGBoost + SHAP, with UniProt annotation interpreted by LLM |
 | Imaging Agent | `agents/imaging_agent.py` | Generates per-sequence MRI descriptions using HuluMed-7B vision-language model |
 | Attending Agent | `agents/attending_agent.py` | Synthesizes modality-specific traces into a patient-level integrated report via structured 5-step reasoning |
 | Self-Critique | `agents/self_critique.py` | Validates attending reports and triggers revision when quality criteria are not met |
